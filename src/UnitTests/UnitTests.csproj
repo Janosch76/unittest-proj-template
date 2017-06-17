@@ -45,15 +45,30 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
     <Compile Include="TestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestObjectBuilder\a.cs" />
+    <Compile Include="TestObjectBuilder\CustomerBuilder.cs" />
+    <Compile Include="TestObjectBuilder\TestDocumentBuilder.cs" />
+    <Compile Include="TestUtils\TempFolder.cs" />
+    <Compile Include="TestUtils\TestDocument.cs" />
+    <Compile Include="SampleUnitTests.cs" />
     <Compile Include="UnitTestAttribute.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestDocuments\document1.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestDocuments\document2.csv" />
+  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
