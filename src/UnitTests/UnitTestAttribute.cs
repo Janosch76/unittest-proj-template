@@ -1,4 +1,4 @@
-﻿namespace UnitTests
+﻿namespace TestProject.Sample
 {
     using System.Collections.Generic;
     using Microsoft.VisualStudio.TestTools.UnitTesting;

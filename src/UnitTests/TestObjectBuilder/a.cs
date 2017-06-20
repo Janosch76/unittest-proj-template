@@ -1,7 +1,6 @@
-﻿namespace UnitTests.TestObjectBuilder
+﻿namespace TestProject.Sample.TestObjectBuilder
 {
     using System;
-    using UnitTests.TestUtils;
 
     /// <summary>
     /// Test object builder

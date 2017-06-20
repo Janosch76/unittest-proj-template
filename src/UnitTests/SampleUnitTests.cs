@@ -1,9 +1,9 @@
-﻿namespace UnitTests
+﻿namespace TestProject.Sample
 {
     using System;
     using System.IO;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using UnitTests.TestObjectBuilder;
+    using TestProject.Sample.TestObjectBuilder;
 
     [TestClass]
     public class SampleUnitTests : TestBase

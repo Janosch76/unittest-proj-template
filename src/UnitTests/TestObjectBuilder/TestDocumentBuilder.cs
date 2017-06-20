@@ -1,7 +1,5 @@
-﻿namespace UnitTests.TestObjectBuilder
+﻿namespace TestProject.Sample.TestObjectBuilder
 {
-    using UnitTests.TestUtils;
-
     /// <summary>
     /// Gets a test document
     /// </summary>

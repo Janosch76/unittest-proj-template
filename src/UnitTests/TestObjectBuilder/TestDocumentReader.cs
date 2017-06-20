@@ -1,4 +1,4 @@
-﻿namespace UnitTests.TestUtils
+﻿namespace TestProject.Sample
 {
     using System.IO;
 

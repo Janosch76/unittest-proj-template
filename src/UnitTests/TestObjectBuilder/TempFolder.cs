@@ -1,4 +1,4 @@
-﻿namespace UnitTests.TestUtils
+﻿namespace TestProject.Sample.TestObjectBuilder
 {
     using System;
     using System.IO;
