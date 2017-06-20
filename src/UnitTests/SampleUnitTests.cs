@@ -5,9 +5,16 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TestProject.Sample.TestObjectBuilder;
 
+    /// <summary>
+    /// A collection of sample unit tests.
+    /// </summary>
     [TestClass]
     public class SampleUnitTests : TestBase
     {
+        /// <summary>
+        /// A unit test using the classic assemble/act/assert pattern, with 
+        /// a test object builder to create a domain object for the test.
+        /// </summary>
         [UnitTest]
         [TestMethod]
         public void TestMethod1()
@@ -21,6 +28,9 @@
             Assert.AreEqual(false, result);
         }
 
+        /// <summary>
+        /// A unit test, showing how to use one of the test documents as input.
+        /// </summary>
         [UnitTest]
         [TestMethod]
         public void TestMethod2()
@@ -35,6 +45,9 @@
             }
         }
 
+        /// <summary>
+        /// A unit test, asserting that the tested statement throws a specified assertion.
+        /// </summary>
         [UnitTest]
         [TestMethod]
         public void TestMethod3()
