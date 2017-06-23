@@ -44,11 +44,27 @@
 		<Reference Include="System.Xml"/>
 	</ItemGroup>
 	<ItemGroup>
-		<Compile Include="Class1.cs" />
-
 		<Compile Include="Properties\AssemblyInfo.cs" />
-	</ItemGroup>
-	<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
+    <Compile Include="IntegrationTestAttribute.cs" />
+    <Compile Include="SampleUnitTests.cs" />
+    <Compile Include="TestBase.cs" />
+    <Compile Include="UnitTestAttribute.cs" />
+
+    <Compile Include="TestObjectBuilder\a.cs" />
+    <Compile Include="TestObjectBuilder\CustomerBuilder.cs" />
+    <Compile Include="TestObjectBuilder\TempFolder.cs" />
+    <Compile Include="TestObjectBuilder\TestDocumentBuilder.cs" />
+    <Compile Include="TestObjectBuilder\TestDocumentReader.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestDocuments\document1.txt" />
+    <Content Include="TestDocuments\document2.csv" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mocks\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
