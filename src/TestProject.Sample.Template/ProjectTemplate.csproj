@@ -39,10 +39,11 @@
 		$endif$
 		$if$ ($targetframeworkversion$ >= 4.0)
 		<Reference Include="Microsoft.CSharp"/>
- 		$endif$
-		<Reference Include="System.Data"/>
-		<Reference Include="System.Xml"/>
-	</ItemGroup>
+    $endif$
+    <Reference Include="Microsoft.VisualStudio.TestTools.UnitTesting"/>
+    <Reference Include="System.Data"/>
+    <Reference Include="System.Xml"/>
+  </ItemGroup>
 	<ItemGroup>
 		<Compile Include="Properties\AssemblyInfo.cs" />
 
