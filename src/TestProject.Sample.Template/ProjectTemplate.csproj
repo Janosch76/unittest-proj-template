@@ -30,20 +30,23 @@
 		<ErrorReport>prompt</ErrorReport>
 		<WarningLevel>4</WarningLevel>
 	</PropertyGroup>
-	<ItemGroup>
-		<Reference Include="System"/>
-		$if$ ($targetframeworkversion$ >= 3.5)
-		<Reference Include="System.Core"/>
-		<Reference Include="System.Xml.Linq"/>
-		<Reference Include="System.Data.DataSetExtensions"/>
-		$endif$
-		$if$ ($targetframeworkversion$ >= 4.0)
-		<Reference Include="Microsoft.CSharp"/>
-    $endif$
-    <Reference Include="Microsoft.VisualStudio.TestTools.UnitTesting"/>
-    <Reference Include="System.Data"/>
-    <Reference Include="System.Xml"/>
+  <ItemGroup>
+    <Reference Include="System" />
   </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
 	<ItemGroup>
 		<Compile Include="Properties\AssemblyInfo.cs" />
 
