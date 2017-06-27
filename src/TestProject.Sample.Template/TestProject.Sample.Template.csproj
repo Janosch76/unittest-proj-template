@@ -87,11 +87,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="AssemblyInfo.cs" />
-    <None Include="ProjectTemplate.csproj" />
+    <None Include="ProjectTemplate.csproj">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="TestProject.Sample.Template.ico" />
   </ItemGroup>
   <ItemGroup>
-    <VSTemplate Include="TestProject.Sample.Template.vstemplate" />
+    <VSTemplate Include="TestProject.Sample.Template.vstemplate">
+      <OutputSubPath>Test</OutputSubPath>
+    </VSTemplate>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
