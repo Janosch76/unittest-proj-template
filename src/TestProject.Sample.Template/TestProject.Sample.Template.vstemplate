@@ -23,6 +23,8 @@
       <!-- Template/TestDocuments -->
       <ProjectItem ReplaceParameters="false" OpenInEditor="false">TestDocuments\document1.txt</ProjectItem>
       <ProjectItem ReplaceParameters="false" OpenInEditor="false">TestDocuments\document2.csv</ProjectItem>
+      <!-- Template/Extensions -->
+      <ProjectItem ReplaceParameters="true" OpenInEditor="false">Extensions\StringExtensions.cs</ProjectItem>
       <!-- Template/TestObjectBuilder -->
       <ProjectItem ReplaceParameters="true" OpenInEditor="false">TestObjectBuilder\a.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" OpenInEditor="false">TestObjectBuilder\CustomerBuilder.cs</ProjectItem>

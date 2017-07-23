@@ -80,6 +80,7 @@
     <None Include="TestObjectBuilder\TestDocumentBuilder.cs" />
     <None Include="TestObjectBuilder\TestDocumentReader.cs" />
     <None Include="IntegrationTestAttribute.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="SampleUnitTests.cs" />
     <None Include="TestBase.cs" />

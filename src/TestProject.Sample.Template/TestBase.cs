@@ -39,5 +39,81 @@
                 typeof(T).Name);
             return null;
         }
+
+        /// <summary>
+        /// Asserts that a given collection is empty.
+        /// </summary>
+        /// <typeparam name="T">The element type</typeparam>
+        /// <param name="items">The collection to check.</param>
+        public static void AssertIsEmpty<T>(IEnumerable<T> items)
+        {
+            AssertIsEmpty(items, $"Expected empty collection, but there are {items.Count()} items");
+        }
+
+        /// <summary>
+        /// Asserts that a given collection is empty.
+        /// </summary>
+        /// <typeparam name="T">The element type</typeparam>
+        /// <param name="items">The collection to check.</param>
+        /// <param name="message">The description given in case the assertion fails.</param>
+        public static void AssertIsEmpty<T>(IEnumerable<T> items, string message)
+        {
+            if (!items.Any())
+            {
+                Assert.Fail(message);
+            }
+        }
+
+        /// <summary>
+        /// Asserts that two given date times are equal.
+        /// </summary>
+        /// <param name="expected">The expected date time.</param>
+        /// <param name="actual">The actual date time.</param>
+        public static void AssertDateTimesAreEqual(DateTime expected, DateTime actual)
+        {
+            string message = $"Expected timestamp {expected: yyyy-MM-dd HH:mm:ss.fff}, but actual timestamp is {actual: yyyy-MM-dd HH:mm:ss.fff}";
+            AssertDateTimesAreEqual(expected, actual, TimeSpan.FromSeconds(0), message);
+        }
+
+        /// <summary>
+        /// Asserts that two given date times are equal.
+        /// </summary>
+        /// <param name="expected">The expected date time.</param>
+        /// <param name="actual">The actual date time.</param>
+        /// <param name="message">The message to show in case the assertion does not hold.</param>
+        public static void AssertDateTimesAreEqual(DateTime expected, DateTime actual, string message)
+        {
+            AssertDateTimesAreEqual(expected, actual, TimeSpan.FromSeconds(0), message);
+        }
+
+        /// <summary>
+        /// Asserts that two given date times are equal.
+        /// </summary>
+        /// <param name="expected">The expected date time.</param>
+        /// <param name="actual">The actual date time.</param>
+        /// <param name="delta">The allowed difference between the two date ties.</param>
+        public static void AssertDateTimesAreEqual(DateTime expected, DateTime actual, TimeSpan delta)
+        {
+            string message = $"Expected equal timestamps, but "
+                + $"actual timestamp {actual.ToString("yyyy-MM-dd HH:mm:ss.fff")} differs "
+                + $"by more than {delta.Milliseconds} milliseconds from "
+                + $"expected timestamp {expected.ToString("yyyy-MM-dd HH:mm:ss.fff")}";
+            AssertDateTimesAreEqual(expected, actual, delta, message);
+        }
+
+        /// <summary>
+        /// Asserts that two given date times are equal.
+        /// </summary>
+        /// <param name="expected">The expected date time.</param>
+        /// <param name="actual">The actual date time.</param>
+        /// <param name="delta">The allowed difference between the two date ties.</param>
+        /// <param name="message">The message to show in case the assertion does not hold.</param>
+        public static void AssertDateTimesAreEqual(DateTime expected, DateTime actual, TimeSpan delta, string message)
+        {
+            if (Math.Abs((expected - actual).Ticks) > delta.Ticks)
+            {
+                Assert.Fail(message);
+            }
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace TestProject.Sample.Extensions
+﻿namespace $safeprojectname$.Extensions
 {
     using System.IO;
 
