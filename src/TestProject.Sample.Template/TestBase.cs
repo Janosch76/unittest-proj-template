@@ -1,6 +1,9 @@
 ﻿namespace $safeprojectname$
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     /// <summary>
@@ -12,32 +15,85 @@
         /// <summary>
         /// Asserts that a specified code block throws an exception.
         /// </summary>
-        /// <typeparam name="T">The exception type.</typeparam>
+        /// <typeparam name="TException">The exception type.</typeparam>
         /// <param name="action">The code block.</param>
+        /// <param name="allowDerivedExceptionTypes">A flag indicating whether derived exception types are allowed or not.</param>
         /// <returns>The exception that was thrown.</returns>
-        public static T AssertThrows<T>(Action action) where T : Exception
+        public static TException AssertThrows<TException>(Action action, bool allowDerivedExceptionTypes = true) where TException : Exception
         {
             try
             {
                 action();
-            }
-            catch (T e)
-            {
-                return e;
+                Assert.Fail(
+                    "Expected exception of type {0}, but no exception was thrown.",
+                    typeof(TException).Name);
+                return null;
             }
             catch (Exception e)
             {
+                if (allowDerivedExceptionTypes && !(e is TException))
+                {
+                    Assert.Fail(
+                        "Expected exception of type {0} or derived type, but an exception of type {1} was thrown.",
+                        typeof(TException).Name,
+                        e.GetType().Name);
+                    return null;
+                }
+                else if (!allowDerivedExceptionTypes && e.GetType() != typeof(TException))
+                {
+                    Assert.Fail(
+                        "Expected exception of type {0}, but an exception of type {1} was thrown.",
+                        typeof(TException).Name,
+                        e.GetType().Name);
+                    return null;
+                }
+                else
+                {
+                    return e as TException;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Asserts that a specified asynchronous code block throws an exception.
+        /// </summary>
+        /// <typeparam name="TException">The exception type.</typeparam>
+        /// <param name="action">The code block.</param>
+        /// <param name="allowDerivedExceptionTypes">A flag indicating whether derived exception types are allowed or not.</param>
+        /// <returns>The exception that was thrown.</returns>
+        public static async Task<TException> AssertThrowsAsync<TException>(Func<Task> action, bool allowDerivedExceptionTypes = true) where TException : Exception
+        {
+            try
+            {
+                await action();
                 Assert.Fail(
-                    "Expected exception of type {0}, but an exception of type {1} was thrown.",
-                    typeof(T).Name,
-                    e.GetType().Name);
+                    "Expected exception of type {0}, but no exception was thrown.",
+                    typeof(TException).Name);
                 return null;
             }
-
-            Assert.Fail(
-                "Expected exception of type {0}, but no exception was thrown.",
-                typeof(T).Name);
-            return null;
+            catch (Exception e)
+            {
+                if (allowDerivedExceptionTypes && !(e is TException))
+                {
+                    Assert.Fail(
+                        "Expected exception of type {0} or derived type, but an exception of type {1} was thrown.",
+                        typeof(TException).Name,
+                        e.GetType().Name);
+                    return null;
+                }
+                else if (!allowDerivedExceptionTypes && e.GetType() != typeof(TException))
+                {
+                    Assert.Fail(
+                        "Expected exception of type {0}, but an exception of type {1} was thrown.",
+                        typeof(TException).Name,
+                        e.GetType().Name);
+                    return null;
+                }
+                else
+                {
+                    return e as TException;
+                }
+            }
         }
 
         /// <summary>

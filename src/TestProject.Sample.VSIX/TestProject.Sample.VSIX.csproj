@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TestProject.Sample.Template\TestProject.Sample.Template.csproj">
-      <Project>{40393CF3-4B27-4ADD-ACE5-AA38D2B293B5}</Project>
+      <Project>{40393cf3-4b27-4add-ace5-aa38d2b293b5}</Project>
       <Name>TestProject.Sample.Template</Name>
       <VSIXSubPath>ProjectTemplates</VSIXSubPath>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
