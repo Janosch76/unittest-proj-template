@@ -87,7 +87,29 @@
             });
         }
 
-        private async Task<int> ReturnAsync(int value)
+        /// <summary>
+        /// A unit test, asserting that the tested statement raises an event.
+        /// </summary>
+        [UnitTest]
+        [TestMethod]
+        public void TestMethod6()
+        {
+            var customer = a.Customer
+                .WithFirstname("John")
+                .WithLastname("Doe")
+                .Create();
+
+            AssertRaisesPropertyChangedEvents(
+                customer,
+                new string[] { nameof(customer.FirstName), nameof(customer.LastName) },
+                () =>
+                {
+                    customer.FirstName = "Michael";
+                    customer.LastName = "Dee";
+                });
+        }
+
+    private async Task<int> ReturnAsync(int value)
         {
             await Task.Delay(10);
             return value;

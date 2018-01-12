@@ -97,6 +97,57 @@
         }
 
         /// <summary>
+        /// Asserts that a given object raises events when executing the given code fragment.
+        /// </summary>
+        /// <param name="objectUnderTest">The object under test.</param>
+        /// <param name="action">The action to execute.</param>
+        public static void AssertRaisesEvents(object objectUnderTest, Action action)
+        {
+            AssertRaisesEvents(objectUnderTest)
+                .Where(events => events.Any(), "Expected object under test to raise events, but none were raised.")
+                .WhenExecuting(action);
+        }
+
+        /// <summary>
+        /// Asserts that a given object raises no events when executing the given code fragment.
+        /// </summary>
+        /// <param name="objectUnderTest">The object under test.</param>
+        /// <param name="action">The action to execute.</param>
+        public static void AssertRaisesNoEvents(object objectUnderTest, Action action)
+        {
+            AssertRaisesEvents(objectUnderTest)
+                .Where(events => !events.Any(), "Expected object under test to raise no events, but some were raised.")
+                .WhenExecuting(action);
+        }
+
+        /// <summary>
+        /// Asserts that a given object raises PropertyChanged events when executing the given code fragment.
+        /// </summary>
+        /// <param name="objectUnderTest">The object under test.</param>
+        /// <param name="propertyNames">The expected property names.</param>
+        /// <param name="action">The action to execute.</param>
+        public static void AssertRaisesPropertyChangedEvents(object objectUnderTest, IEnumerable<string> propertyNames, Action action)
+        {
+            AssertRaisesEvents(objectUnderTest)
+                .Where(events => events
+                    .Where(e => e.EventArgs is System.ComponentModel.PropertyChangedEventArgs)
+                    .Select(e => (e.EventArgs as System.ComponentModel.PropertyChangedEventArgs).PropertyName)
+                    .SequenceEqual(propertyNames), 
+                    "Expected object under test to raise PropertyChanged events for " + string.Join(", ", propertyNames))
+                .WhenExecuting(action);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="EventAssertion"/> for a given object under test.
+        /// </summary>
+        /// <param name="objectUnderTest">The object under test.</param>
+        /// <returns>A new event assertion.</returns>
+        public static EventAssertion AssertRaisesEvents(object objectUnderTest)
+        {
+            return new EventAssertion(objectUnderTest);
+        }
+
+        /// <summary>
         /// Asserts that a given collection is empty.
         /// </summary>
         /// <typeparam name="T">The element type</typeparam>
@@ -169,6 +220,76 @@
             if (Math.Abs((expected - actual).Ticks) > delta.Ticks)
             {
                 Assert.Fail(message);
+            }
+        }
+
+        /// <summary>
+        /// Event assertion builder.
+        /// </summary>
+        public class EventAssertion
+        {
+            private readonly object objectUnderTest;
+            private readonly Dictionary<Predicate<IEnumerable<EventMonitor.EventData>>, string> eventProperties;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="EventAssertion" /> class.
+            /// </summary>
+            /// <param name="objectUnderTest">The object under test.</param>
+            internal EventAssertion(object objectUnderTest)
+            {
+                this.objectUnderTest = objectUnderTest;
+                this.eventProperties = new Dictionary<Predicate<IEnumerable<EventMonitor.EventData>>, string>();
+            }
+
+            /// <summary>
+            /// Adds a new property that is required for the observed events.
+            /// </summary>
+            /// <param name="eventProperty">The event property.</param>
+            /// <param name="message">The error message in case the property does not hold.</param>
+            /// <returns>The event assertion builder</returns>
+            public EventAssertion Where(Predicate<EventMonitor.EventData> eventProperty, string message = null)
+            {
+                return Where((IEnumerable<EventMonitor.EventData> events) => events.All(e => eventProperty(e)), message);
+            }
+
+            /// <summary>
+            /// Adds a new property that is required for the observed events.
+            /// </summary>
+            /// <param name="eventProperty">The event property.</param>
+            /// <param name="message">The error message in case the property does not hold.</param>
+            /// <returns>The event assertion builder</returns>
+            public EventAssertion Where(Predicate<IEnumerable<EventMonitor.EventData>> eventProperty, string message = null)
+            {
+                if (string.IsNullOrEmpty(message))
+                {
+                    message = "Expected property does not hold for raised events.";
+                }
+
+                this.eventProperties.Add(eventProperty, message);
+                return this;
+            }
+
+            /// <summary>
+            /// Executes a given code fragment and checks that the registered
+            /// properties hold for the observed events from the object under test.
+            /// </summary>
+            /// <param name="action">The action to execute.</param>
+            public void WhenExecuting(Action action)
+            {
+                using (var eventMonitor = new EventMonitor(this.objectUnderTest))
+                {
+                    action();
+
+                    foreach (var kv in this.eventProperties)
+                    {
+                        var eventProperty = kv.Key;
+                        var message = kv.Value;
+                        if (!eventProperty(eventMonitor.Events))
+                        {
+                            Assert.Fail(message);
+                        }
+                    }
+                }
             }
         }
     }

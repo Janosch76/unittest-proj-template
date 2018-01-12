@@ -16,6 +16,7 @@
     <Project File="ProjectTemplate.csproj" ReplaceParameters="true">
       <!-- Template -->
       <ProjectItem ReplaceParameters="true" TargetFileName="Properties\AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" OpenInEditor="false">EventMonitor.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" OpenInEditor="false">IntegrationTestAttribute.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" OpenInEditor="true">SampleUnitTests.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" OpenInEditor="false">TestBase.cs</ProjectItem>

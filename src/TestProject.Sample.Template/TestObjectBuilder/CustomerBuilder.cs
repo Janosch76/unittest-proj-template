@@ -1,6 +1,7 @@
 ﻿namespace $safeprojectname$.TestObjectBuilder
 {
     using System;
+    using System.ComponentModel;
 
     /// <summary>
     /// Builds a customer object
@@ -67,11 +68,11 @@
         /// <summary>
         /// A sample customer object. Replace this by an actual domain object to test.
         /// </summary>
-        public class Customer 
+        public class Customer : INotifyPropertyChanged
         {
-            private readonly string firstname;
-            private readonly string lastname;
-            private readonly DateTime birthdate;
+            private string firstname;
+            private string lastname;
+            private DateTime birthdate;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Customer"/> class.
@@ -84,6 +85,51 @@
                 this.firstname = firstname;
                 this.lastname = lastname;
                 this.birthdate = birthdate;
+            }
+
+            /// <summary>
+            /// Occurs when a property is changed.
+            /// </summary>
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            /// <summary>
+            /// Gets or sets the first name.
+            /// </summary>
+            public string FirstName
+            {
+                get
+                {
+                    return this.firstname;
+                }
+
+                set
+                {
+                    if (this.firstname != value)
+                    {
+                        this.firstname = value;
+                        OnPropertyChanged(nameof(FirstName));
+                    }
+                }
+            }
+
+            /// <summary>
+            /// Gets or sets the last name.
+            /// </summary>
+            public string LastName
+            {
+                get
+                {
+                    return this.lastname;
+                }
+
+                set
+                {
+                    if (this.lastname != value)
+                    {
+                        this.lastname = value;
+                        OnPropertyChanged(nameof(LastName));
+                    }
+                }
             }
 
             /// <summary>

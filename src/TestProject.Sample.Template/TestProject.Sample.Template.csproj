@@ -115,6 +115,7 @@
     <Folder Include="Mocks\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="EventMonitor.cs" />
     <Content Include="TestDocuments\document1.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
