@@ -53,9 +53,10 @@
         [TestMethod]
         public void TestMethod3()
         {
+            var numbers = new int[] { 1, 2, 3 };
+
             AssertThrows<IndexOutOfRangeException>(() =>
             {
-                var numbers = new int[] { 1, 2, 3 };
                 var result = numbers[3];
             });
         }
@@ -79,12 +80,35 @@
         [TestMethod]
         public async Task TestMethod5()
         {
+            var numbers = new int[] { 1, 2, 3 };
+
             await AssertThrowsAsync<IndexOutOfRangeException>(async () =>
             {
-                var numbers = new int[] { 1, 2, 3 };
                 var i = await ReturnAsync(3);
                 var result = numbers[i];
             });
+        }
+
+        /// <summary>
+        /// A unit test, asserting that the tested statement raises an event.
+        /// </summary>
+        [UnitTest]
+        [TestMethod]
+        public void TestMethod6()
+        {
+            var customer = a.Customer
+                .WithFirstname("John")
+                .WithLastname("Doe")
+                .Create();
+
+            AssertRaisesPropertyChangedEvents(
+                customer,
+                new string[] { nameof(customer.FirstName), nameof(customer.LastName) },
+                () =>
+                {
+                    customer.FirstName = "Michael";
+                    customer.LastName = "Dee";
+                });
         }
 
         private async Task<int> ReturnAsync(int value)

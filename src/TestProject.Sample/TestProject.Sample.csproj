@@ -52,6 +52,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="EventMonitor.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="IntegrationTestAttribute.cs" />
     <Compile Include="TestBase.cs" />
